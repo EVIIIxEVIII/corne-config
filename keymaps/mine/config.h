@@ -25,6 +25,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 125
 
+#define COMBO_COUNT 1
+#define COMBO_TERM 30
+#define SPLIT_COMBO_ENABLE
+
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD

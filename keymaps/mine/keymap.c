@@ -9,17 +9,27 @@ bool get_mod_tap_interrupt(uint16_t keycode) {
 	}
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case 7:
-			if (record->event.pressed) {
+enum combo_events {
+	GAMING_COMBO,
+	COMBO_LENGTH
+};
+
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
+const uint16_t PROGMEM gaming_combo[] = {KC_Q, KC_P, COMBO_END};
+combo_t key_combos[COMBO_LENGTH] = {
+	[GAMING_COMBO] = COMBO_ACTION(gaming_combo),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+	switch(combo_index) {
+		case GAMING_COMBO:
+			if (pressed) {
 				layer_invert(7);
 			}
-			return false;
+			break;
 	}
-	return true;
 }
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3_ex2(
@@ -27,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, LALT_T(KC_A), LGUI_T(KC_S), LCTL_T(KC_D),  LSFT_T(KC_F),  KC_G,         KC_VOLD,             KC_NO,        KC_H, LSFT_T(KC_J),  LCTL_T(KC_K),   LGUI_T(KC_L),   LALT_T(KC_SCLN), KC_QUOTE,
         KC_NO, KC_Z,         RALT_T(KC_X), KC_C,          KC_V,          KC_B,                                            KC_N, KC_M,          KC_COMM,        RALT_T(KC_DOT), KC_SLSH,         KC_NO,
 
-                                                          LT(3,KC_ESC),  LT(1,KC_SPC), LT(2,KC_TAB),      LT(5,KC_ENT), LT(4,KC_BSPC),       LT(6,KC_DEL)
+                                                          LT(3,KC_ESC),  LT(2,KC_TAB), LT(1,KC_SPC),      LT(5,KC_ENT), LT(4,KC_BSPC),       LT(6,KC_DEL)
     ),
 
     [1] = LAYOUT_split_3x6_3_ex2(
@@ -75,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_F11,       KC_F4,        KC_F5,        KC_F6,        KC_SLCT,      KC_NO,             KC_NO,        KC_NO,   KC_LSFT,      KC_LCTL,      KC_LGUI,      KC_LALT,      KC_NO,
         KC_NO, KC_F10,       KC_F1,        KC_F2,        KC_F3,        KC_PAUS,                                        KC_NO,   KC_NO,        KC_NO,        KC_RALT,      KC_NO,        KC_NO,
 
-                                                        KC_APP,       KC_SPC,       KC_TAB,            KC_NO,        KC_NO,                KC_NO
+                                                        KC_APP,       KC_TAB,       KC_SPC,            KC_NO,        KC_NO,                KC_NO
     ),
 
     [7] = LAYOUT_split_3x6_3_ex2(
@@ -83,6 +93,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_A,         KC_S,         KC_D,          KC_F,          KC_G,         KC_VOLD,             KC_NO,        KC_H, KC_J,          KC_K,           KC_L,           KC_SCLN,         KC_QUOTE,
         KC_LSFT, KC_Z,         KC_X,         KC_C,          KC_V,          KC_B,                                            KC_N, KC_M,          KC_COMM,        KC_DOT,         KC_SLSH,         KC_NO,
 
-                                                          LT(3,KC_ESC),    KC_SPC,       LT(2,KC_TAB),        LT(5,KC_ENT), LT(4,KC_BSPC),       LT(6,KC_DEL)
+                                                          LT(3,KC_ESC),    LT(2,KC_TAB),       KC_SPC,        LT(5,KC_ENT), LT(4,KC_BSPC),       LT(6,KC_DEL)
     ),
 };
