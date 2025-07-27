@@ -15,7 +15,7 @@ qmk setup -y
 
 3. Compile the firmware
 ```sh
-compile -kb crkbd/rev4_1/standard -km default
+compile -kb crkbd/rev4_1/standard -km mine
 ```
 
 4. Reset the keyboard and mount it
